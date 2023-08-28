@@ -50,7 +50,7 @@ steps:
         KEY_FILE_PATH=$(Agent.TempDirectory)/oauth-client-${{parameters.environmentName}}2.key
         ls $PFX_FILE_PATH    
         echo "Extracao privatekey do pfx"
-        openssl pkcs12 -in $PFX_FILE_PATH -nocerts -nodes -out $KEY_FILE_PATH 
+        openssl pkcs12 -in $PFX_FILE_PATH -nocerts -nodes -out $KEY_FILE_PATH -password pass:${{parameters.certificatepassword}}
         ls $KEY_FILE_PATH
         echo "Declara Extraction como false"
         sed -n '/-----BEGIN PRIVATE KEY-----/,/-----END PRIVATE KEY-----/p' "$KEY_FILE_PATH" > $(Agent.TempDirectory)/oauth-client-${{parameters.environmentName}}.key
