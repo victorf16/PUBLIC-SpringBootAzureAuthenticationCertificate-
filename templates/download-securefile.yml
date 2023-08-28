@@ -1,0 +1,56 @@
+parameters:
+  - name: environmentName
+    type: string
+
+
+  - name: certificatepassword
+    type: string
+
+
+
+steps:
+
+  - task: DownloadSecureFile@1
+    condition: or(
+      and(startsWith(variables['Build.SourceBranch'], 'refs/heads/bugfix/'), eq('${{ parameters.environmentName }}', 'development')),
+      and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/development')),
+      and(always(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature/')))
+    displayName: 'Baixando Cert Pfx'
+    inputs:
+      secureFile: 'oauth-client-dev.pfx'
+
+  - task: DownloadSecureFile@1
+    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/sit'))
+    displayName: 'Baixando Cert Pfx'
+    inputs:
+      secureFile: 'oauth-client-sit.pfx'
+
+  - task: DownloadSecureFile@1
+    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/uat'))
+    displayName: 'Baixando Cert Pfx'
+    inputs:
+      secureFile: 'oauth-client-uat.pfx'
+
+
+  - task: Bash@3
+    displayName: "Extração Private Key do Certificado PFX"
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Install OpenSSL if not already available
+        echo 'Atualizacao apt-get'
+        sudo apt-get update
+        echo 'Instalacao openssl'
+        sudo apt-get install --only-upgrade openssl
+        echo 'Mostra Ambiente'
+        ls $(Agent.TempDirectory)
+        echo 'Armazena Path do certificado pfx baixado do security files'
+        PFX_FILE_PATH=$(Agent.TempDirectory)/oauth-client-${{parameters.environmentName}}.pfx
+        echo 'Armazena Path do certificado key que sera gerado'
+        KEY_FILE_PATH=$(Agent.TempDirectory)/oauth-client-${{parameters.environmentName}}2.key
+        ls $PFX_FILE_PATH    
+        echo "Extracao privatekey do pfx"
+        openssl pkcs12 -in $PFX_FILE_PATH -nocerts -nodes -out $KEY_FILE_PATH 
+        ls $KEY_FILE_PATH
+        echo "Declara Extraction como false"
+        sed -n '/-----BEGIN PRIVATE KEY-----/,/-----END PRIVATE KEY-----/p' "$KEY_FILE_PATH" > $(Agent.TempDirectory)/oauth-client-${{parameters.environmentName}}.key
