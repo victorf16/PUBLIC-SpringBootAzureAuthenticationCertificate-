@@ -35,8 +35,9 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
       environment: dev
-      variables:
-      - group: L-SAFNC-SACredit-apresentacao-Dev   
+    variables:
+      - group: L-SAFNC-SACredit-apresentacao-Dev  # Correctly reference the variable group here
+ 
 
     steps:
     - checkout: self
