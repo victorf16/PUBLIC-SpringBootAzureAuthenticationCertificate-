@@ -53,22 +53,22 @@ stages:
         TargetFolder: $(System.DefaultWorkingDirectory)/src/main/resources/
       name: CopyFiles            
 
-    # - task: qetza.replacetokens.replacetokens-task.replacetokens@4
-    #   displayName: '*App* | Replace tokens in **/*.properties'
-    #   inputs:
-    #         rootDirectory: ''
-    #         targetFiles: '**/application.properties'
-
     - task: qetza.replacetokens.replacetokens-task.replacetokens@4
-      displayName: 'Replace Tokens in Configuration Files'
+      displayName: '*App* | Replace tokens in **/*.properties'
       inputs:
-        rootDirectory: '$(System.DefaultWorkingDirectory)' # Set this to the root directory where your files are located
-        targetFiles: '**/*.config' # Update this pattern to match your configuration file(s)
-        tokenPrefix: '#{'
-        tokenSuffix: '}#'
-        keepToken: false # Set this to 'true' if you want to keep the token in the file after replacement
-      env:
-        ReplaceTokens_VariableGroupName: 'L-SAFNC-SACredit-apresentacao-Dev' # Specify your variable group name
+            rootDirectory: ''
+            targetFiles: '**/application.properties'
+
+    # - task: qetza.replacetokens.replacetokens-task.replacetokens@4
+    #   displayName: 'Replace Tokens in Configuration Files'
+    #   inputs:
+    #     rootDirectory: '$(System.DefaultWorkingDirectory)' # Set this to the root directory where your files are located
+    #     targetFiles: '**/*.config' # Update this pattern to match your configuration file(s)
+    #     tokenPrefix: '#{'
+    #     tokenSuffix: '}#'
+    #     keepToken: false # Set this to 'true' if you want to keep the token in the file after replacement
+    #   env:
+    #     ReplaceTokens_VariableGroupName: 'L-SAFNC-SACredit-apresentacao-Dev' # Specify your variable group name
 
     - task: Maven@3
       displayName: 'Maven pom.xml'
