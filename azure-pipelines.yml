@@ -43,7 +43,14 @@ stages:
         mavenAuthenticateFeed: true
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
-        #options: 'package -Dmaven.test.skip'
+        options: 'package -Dmaven.test.skip'
+
+
+ 
+
+
+
+
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
