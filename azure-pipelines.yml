@@ -7,21 +7,21 @@ trigger: none
 
 
 
-variables:
+#variables:
   
 
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '2c814482-e174-47a3-a7ec-8fa1be163b68'
+#  azureSubscription: '2c814482-e174-47a3-a7ec-8fa1be163b68'
 
   # Web app name
-  webAppName: 'webapp-dev-ApimWebAppTerraform-client'
+#  webAppName: 'webapp-dev-ApimWebAppTerraform-client'
 
   # Environment name
-  environmentName: 'dev'
+#  environmentName: 'dev'
 
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+#  vmImageName: 'ubuntu-latest'
 
 
 
