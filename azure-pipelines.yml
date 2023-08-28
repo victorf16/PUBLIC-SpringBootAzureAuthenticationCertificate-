@@ -38,7 +38,7 @@ stages:
         publishJUnitResults: false
         codeCoverageToolOption: 'jaCoCo'
         javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '1.11'
+        jdkVersionOption: '1.17'
         mavenVersionOption: 'Default'
         mavenAuthenticateFeed: true
         effectivePomSkip: false
