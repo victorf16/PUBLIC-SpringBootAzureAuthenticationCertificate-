@@ -1,20 +1,5 @@
 package com.example.apresentacao.services;
 
-//import java.io.IOException;
-//import java.io.InputStream;
-//import java.nio.charset.Charset;
-//import java.security.KeyFactory;
-//import java.security.NoSuchAlgorithmException;
-//import java.security.interfaces.RSAPrivateKey;
-//import java.security.interfaces.RSAPublicKey;
-//import java.security.spec.InvalidKeySpecException;
-//import java.security.spec.PKCS8EncodedKeySpec;
-//import java.security.spec.X509EncodedKeySpec;
-//import lombok.extern.slf4j.Slf4j;
-//import org.apache.tomcat.util.codec.binary.Base64;
-//import org.springframework.stereotype.Service;
-//import org.springframework.util.FileCopyUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
