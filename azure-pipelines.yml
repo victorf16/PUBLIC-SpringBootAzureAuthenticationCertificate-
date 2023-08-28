@@ -43,7 +43,7 @@ stages:
     - template: templates/download-securefile.yml
       parameters:
             environmentName: "$(environmentName)"
-            certificatebawpassword: $(certificate-password)    
+            certificatepassword: $(certificate-password)
 
     - task: CopyFiles@2
       displayName: 'Copy File oauth-client-dev.key to artifact staging directory'
