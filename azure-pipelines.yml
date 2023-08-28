@@ -135,9 +135,9 @@ stages:
   jobs:
   - deployment: DeployJavaApp
     displayName: Deploy Java Web App
-    environment: $(environmentName)
+    environment: dev
     pool:
-      vmImage: $(vmImageName)
+      vmImage: 'ubuntu-latest'
     strategy:
       runOnce:
         deploy:
