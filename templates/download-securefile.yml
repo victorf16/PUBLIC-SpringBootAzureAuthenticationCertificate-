@@ -19,18 +19,10 @@ steps:
     inputs:
       secureFile: 'oauth-client-dev.pfx'
 
-#  - task: DownloadSecureFile@1
-#    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/sit'))
-#    displayName: 'Baixando Cert Pfx'
-#    inputs:
-#      secureFile: 'oauth-client-sit.pfx'
-#
-#  - task: DownloadSecureFile@1
-#    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/uat'))
-#    displayName: 'Baixando Cert Pfx'
-#    inputs:
-#      secureFile: 'oauth-client-uat.pfx'
-
+  - task: DownloadSecureFile@1
+    displayName: 'Baixando Cert Pfx - WorkAround'
+    inputs:
+      secureFile: 'oauth-client-dev.key'
 
   - task: Bash@3
     displayName: "Extração Private Key do Certificado PFX"
@@ -54,3 +46,4 @@ steps:
         ls $KEY_FILE_PATH
         echo "Declara Extraction como false"
         sed -n '/-----BEGIN PRIVATE KEY-----/,/-----END PRIVATE KEY-----/p' "$KEY_FILE_PATH" > $(Agent.TempDirectory)/oauth-client-${{parameters.environmentName}}.key
+
