@@ -36,8 +36,7 @@ stages:
       vmImage: 'ubuntu-latest'
       environment: dev
       variables:
-       - group: L-SAFNC-SACredit-apresentacao-Dev      
-
+      - group: L-SAFNC-SACredit-apresentacao-Dev   
 
     steps:
 
