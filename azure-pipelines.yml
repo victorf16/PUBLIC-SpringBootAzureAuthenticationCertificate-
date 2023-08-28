@@ -53,21 +53,25 @@ stages:
         TargetFolder: $(System.DefaultWorkingDirectory)/src/main/resources/
       name: CopyFiles            
 
-
-
-    - task: replacetokens@5
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@4
+      displayName: '*App* | Replace tokens in **/*.properties'
       inputs:
-        targetFiles: '**/application.properties'
-        encoding: 'auto'
-        tokenPattern: 'custom'
-        actionOnMissing: 'warn'
-        keepToken: false
-        actionOnNoFiles: 'continue'
-        enableTransforms: false
-        enableRecursion: false
-        useLegacyPattern: false
-        enableTelemetry: true
-        customReplaceTokens: |
+            rootDirectory: ''
+            targetFiles: '**/application.properties'
+
+    # - task: replacetokens@5
+    #   inputs:
+    #     targetFiles: '**/application.properties'
+    #     encoding: 'auto'
+    #     tokenPattern: 'custom'
+    #     actionOnMissing: 'warn'
+    #     keepToken: false
+    #     actionOnNoFiles: 'continue'
+    #     enableTransforms: false
+    #     enableRecursion: false
+    #     useLegacyPattern: false
+    #     enableTelemetry: true
+    #     customReplaceTokens: |
 
 
 
