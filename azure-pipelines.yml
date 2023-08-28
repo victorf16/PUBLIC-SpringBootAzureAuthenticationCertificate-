@@ -35,7 +35,7 @@ stages:
     pool:
       vmImage: $(vmImageName)
       variables:
-      - group: L-SAFNC-SACredit-FAS-DEV      
+      - group: L-SAFNC-SACredit-apresentacao-Dev      
 
 
     steps:
@@ -58,6 +58,33 @@ stages:
       inputs:
             rootDirectory: ''
             targetFiles: '**/application.properties'
+
+    # - task: replacetokens@5
+    #   inputs:
+    #     targetFiles: '**/application.properties'
+    #     encoding: 'auto'
+    #     tokenPattern: 'custom'
+    #     actionOnMissing: 'warn'
+    #     keepToken: false
+    #     actionOnNoFiles: 'continue'
+    #     enableTransforms: false
+    #     enableRecursion: false
+    #     useLegacyPattern: false
+    #     enableTelemetry: true
+    #     customReplaceTokens: |
+
+
+
+    # - task: qetza.replacetokens.replacetokens-task.replacetokens@4
+    #   displayName: 'Replace Tokens in Configuration Files'
+    #   inputs:
+    #     rootDirectory: '$(System.DefaultWorkingDirectory)' # Set this to the root directory where your files are located
+    #     targetFiles: '**/*.config' # Update this pattern to match your configuration file(s)
+    #     tokenPrefix: '#{'
+    #     tokenSuffix: '}#'
+    #     keepToken: false # Set this to 'true' if you want to keep the token in the file after replacement
+    #   env:
+    #     ReplaceTokens_VariableGroupName: 'L-SAFNC-SACredit-apresentacao-Dev' # Specify your variable group name
 
     - task: Maven@3
       displayName: 'Maven pom.xml'
