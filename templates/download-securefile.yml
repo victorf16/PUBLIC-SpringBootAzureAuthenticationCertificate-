@@ -19,17 +19,17 @@ steps:
     inputs:
       secureFile: 'oauth-client-dev.pfx'
 
-  - task: DownloadSecureFile@1
-    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/sit'))
-    displayName: 'Baixando Cert Pfx'
-    inputs:
-      secureFile: 'oauth-client-sit.pfx'
-
-  - task: DownloadSecureFile@1
-    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/uat'))
-    displayName: 'Baixando Cert Pfx'
-    inputs:
-      secureFile: 'oauth-client-uat.pfx'
+#  - task: DownloadSecureFile@1
+#    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/sit'))
+#    displayName: 'Baixando Cert Pfx'
+#    inputs:
+#      secureFile: 'oauth-client-sit.pfx'
+#
+#  - task: DownloadSecureFile@1
+#    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/uat'))
+#    displayName: 'Baixando Cert Pfx'
+#    inputs:
+#      secureFile: 'oauth-client-uat.pfx'
 
 
   - task: Bash@3
