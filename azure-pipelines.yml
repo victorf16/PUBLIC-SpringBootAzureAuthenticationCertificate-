@@ -40,6 +40,15 @@ stages:
 
     steps:
     - checkout: self
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          echo "Mostra variavel"
+          echo $(environmentName)
+
     - template: templates/download-securefile.yml
       parameters:
             environmentName: "$(environmentName)"
