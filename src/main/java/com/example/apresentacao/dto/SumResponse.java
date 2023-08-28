@@ -9,6 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
+// Compare this snippet from src\main\java\com\in28minutes\learnspringboot\dto\SumResponse.java:
 // SumResponse.java
 public class SumResponse {
 

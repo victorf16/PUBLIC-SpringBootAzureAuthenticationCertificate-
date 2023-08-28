@@ -20,6 +20,7 @@ import org.springframework.util.FileCopyUtils;
 public class CertificateService {
 //
 
+
     public RSAPrivateKey readPrivateKey(InputStream inputStream)
             throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 

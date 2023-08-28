@@ -50,22 +50,29 @@ public class JWTCertificateService{
     private String scope;
 
 
+
+
+
     public String getAssertion() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 
         String uuid = UUID.randomUUID().toString();
 
+        /********* Processo abaixo le o certificado do caminho classpath  ***********/
         Resource resource = resourceLoader.getResource(classpath);
 
+        // Le o certificado e retorna um objeto do tipo RSAPrivateKey que é usado para assinar o JWT token abaixo
         RSAPrivateKey rsaPrivateKey = certificateService.readPrivateKey(resource.getInputStream());
 
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.RS256;
-        LocalDateTime now = LocalDateTime.now();
-        ZoneId zoneId = ZoneId.systemDefault();
 
-        long nbf = now.atZone(zoneId).toEpochSecond();
+        // Cria o token JWT com os dados abaixo
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.RS256; // Algoritmo de assinatura do JWT
+        LocalDateTime now = LocalDateTime.now(); // Data e hora atual
+        ZoneId zoneId = ZoneId.systemDefault(); // Timezone do sistema
 
-        LocalDateTime now2 = now.plusSeconds(30);
-        long exp = now2.atZone(zoneId).toEpochSecond();
+        long nbf = now.atZone(zoneId).toEpochSecond(); // Data e hora atual em segundos
+
+        LocalDateTime now2 = now.plusSeconds(30); // Data e hora atual + 30 segundos
+        long exp = now2.atZone(zoneId).toEpochSecond(); //
 
         String aud = azuerAuthURL + tenant + "/v2.0";
         return Jwts.builder()
@@ -81,6 +88,8 @@ public class JWTCertificateService{
                 .compact();
     }
 
+
+    /* Abaixo é feito o post para o Azure AD para obter o token JWT */
     public Mono<String> getToken() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
 
         WebClient client =  WebClient.create(azuerAuthURL);

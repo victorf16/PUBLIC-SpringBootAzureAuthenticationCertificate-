@@ -7,24 +7,6 @@ trigger: none
 
 
 
-#variables:
-  
-
-
-  # Azure Resource Manager connection created during pipeline creation
-#  azureSubscription: '2c814482-e174-47a3-a7ec-8fa1be163b68'
-
-  # Web app name
-#  webAppName: 'webapp-dev-ApimWebAppTerraform-client'
-
-  # Environment name
-#  environmentName: 'dev'
-
-  # Agent VM image name
-#  vmImageName: 'ubuntu-latest'
-
-
-
 stages:
 - stage: Build
   displayName: Build stage
@@ -42,14 +24,8 @@ stages:
     steps:
     - checkout: self
 
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          # Write your commands here
-          echo "Mostra variavel"
-          echo $(environmentName)
 
+      #### CHama pipeline template para download do certificado pfx caso a utilo
     - template: templates/download-securefile.yml
       parameters:
             environmentName: "$(environmentName)"
@@ -63,38 +39,13 @@ stages:
         TargetFolder: $(System.DefaultWorkingDirectory)/src/main/resources/
       name: CopyFiles            
 
+      #### para a task abaixo, é necessário a instalação do replace tokens no azure devops ####
     - task: qetza.replacetokens.replacetokens-task.replacetokens@4
       displayName: '*App* | Replace tokens in **/*.properties'
       inputs:
             rootDirectory: ''
             targetFiles: '**/application.properties'
 
-    # - task: replacetokens@5
-    #   inputs:
-    #     targetFiles: '**/application.properties'
-    #     encoding: 'auto'
-    #     tokenPattern: 'custom'
-    #     actionOnMissing: 'warn'
-    #     keepToken: false
-    #     actionOnNoFiles: 'continue'
-    #     enableTransforms: false
-    #     enableRecursion: false
-    #     useLegacyPattern: false
-    #     enableTelemetry: true
-    #     customReplaceTokens: |
-
-
-
-    # - task: qetza.replacetokens.replacetokens-task.replacetokens@4
-    #   displayName: 'Replace Tokens in Configuration Files'
-    #   inputs:
-    #     rootDirectory: '$(System.DefaultWorkingDirectory)' # Set this to the root directory where your files are located
-    #     targetFiles: '**/*.config' # Update this pattern to match your configuration file(s)
-    #     tokenPrefix: '#{'
-    #     tokenSuffix: '}#'
-    #     keepToken: false # Set this to 'true' if you want to keep the token in the file after replacement
-    #   env:
-    #     ReplaceTokens_VariableGroupName: 'L-SAFNC-SACredit-apresentacao-Dev' # Specify your variable group name
 
     - task: Maven@3
       displayName: 'Maven pom.xml'
@@ -111,11 +62,6 @@ stages:
         options: 'package -Dmaven.test.skip'
 
 
- 
-
-
-
-
 
     - task: CopyFiles@2
       displayName: 'Copy Files to artifact staging directory'
@@ -124,9 +70,13 @@ stages:
         Contents: '**/target/*.?(war|jar)'
         TargetFolder: $(Build.ArtifactStagingDirectory)
 
+
     - upload: $(Build.ArtifactStagingDirectory)
       displayName: faz upload da pasta Build.ArtifactStagingDirectory para artefato criado chamado drop
       artifact: drop
+
+
+
 
 - stage: Deploy
   displayName: Deploy stage
@@ -145,8 +95,8 @@ stages:
           - task: AzureWebApp@1
             displayName: 'Azure Web App Deploy: webpessoalspring'
             inputs:
-              azureSubscription: 'Azure subscription 1 (2c814482-e174-47a3-a7ec-8fa1be163b68)'
+              azureSubscription: 'INSIRA AQUI A SUA SUBSCRIÇÃO'
               appType: 'webApp'
-              appName: 'webapp-dev-ApimWebAppTerraform-client'
+              appName: 'NOME DO SEU WEBAPP'
               package: '$(Pipeline.Workspace)/drop/**/target/*.?(war|jar)'
               deploymentMethod: 'auto'
