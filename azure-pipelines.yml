@@ -5,7 +5,11 @@
 
 trigger: none
 
+
+
 variables:
+  
+
 
   # Azure Resource Manager connection created during pipeline creation
   azureSubscription: '2c814482-e174-47a3-a7ec-8fa1be163b68'
@@ -19,6 +23,8 @@ variables:
   # Agent VM image name
   vmImageName: 'windows-latest'
 
+
+
 stages:
 - stage: Build
   displayName: Build stage
@@ -28,9 +34,31 @@ stages:
     displayName: Maven Package and Publish Artifacts
     pool:
       vmImage: $(vmImageName)
+      variables:
+      - group: L-SAFNC-SACredit-FAS-DEV      
 
 
     steps:
+
+    - template: templates/download-securefile.yml
+      parameters:
+            environmentName: "$(environmentName)"
+            certificatebawpassword: $(certificate-password)    
+
+    - task: CopyFiles@2
+      displayName: 'Copy File oauth-client-dev.key to artifact staging directory'
+      inputs:
+        SourceFolder: '$(Agent.TempDirectory)'
+        Contents: 'oauth-client-$(environmentName).key'
+        TargetFolder: $(System.DefaultWorkingDirectory)/src/main/resources/
+      name: CopyFiles            
+
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@4
+      displayName: '*App* | Replace tokens in **/*.properties'
+      inputs:
+            rootDirectory: ''
+            targetFiles: '**/application.properties'
+
     - task: Maven@3
       displayName: 'Maven pom.xml'
       inputs:
