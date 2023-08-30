@@ -10,6 +10,14 @@ parameters:
 
 steps:
 
+  - task: Bash@3
+    displayName: "teste de template"
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Install OpenSSL if not already available
+        echo 'Template Executado'
+
   - task: DownloadSecureFile@1
     condition: or(
       and(startsWith(variables['Build.SourceBranch'], 'refs/heads/bugfix/'), eq('${{ parameters.environmentName }}', 'development')),
