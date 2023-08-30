@@ -21,7 +21,7 @@ steps:
 
   - task: DownloadSecureFile@1
     condition: 
-      and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/sit')),
+      eq('${{ parameters.environmentName }}', 'sit')
     displayName: 'Baixando Cert Pfx'
     inputs:
       secureFile: 'oauth-client-sit.pfx'
