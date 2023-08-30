@@ -19,6 +19,13 @@ steps:
     inputs:
       secureFile: 'oauth-client-dev.pfx'
 
+  - task: DownloadSecureFile@1
+    condition: 
+      and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/sit')),
+    displayName: 'Baixando Cert Pfx'
+    inputs:
+      secureFile: 'oauth-client-sit.pfx'
+
   ## Workaround para caso o processo de extrção da private key do certificado pfx nao funciona corretamente ##
 #  - task: DownloadSecureFile@1
 #    displayName: 'Baixando Cert Pfx - WorkAround'
