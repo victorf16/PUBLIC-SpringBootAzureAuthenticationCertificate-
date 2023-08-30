@@ -1,5 +1,5 @@
 parameters:
-  - name: cacetada
+  - name: environmentName
     type: string
 
 
